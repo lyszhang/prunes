@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prunes</title>
+    <link rel="icon" href="../static/images/favicon_32.png" sizes="32x32" />
+	<link rel="icon" href="../static/images/favicon_32.png" sizes="144x144" />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<div>
+    <div class="page-header">
+        <h1>Prunes <small>IPFS resources sharing</small></h1>
+    </div>
+    <div class="jumbotron">
+        <p>If got any wonderful resources, welcome to sharing with all followers！</p>
+        <p>And for easy search，please fill the file info precisely<p style="color: #4638ff">Thank you!</p></p>
+        <hr />
+        <div align="left">
+            <p>If you found uploaded file on ipfs network, share the info!</p>
+            <form class="form-inline" method="post">
+                <div class="form-group">
+                    <label for="exampleInputName">Filename</label>
+                    <input type="text" class="form-control" name="exampleInputName" placeholder="Secret Superstar.avi">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputHash">FileHash</label>
+                    <input type="text" class="form-control" name="exampleInputHash" placeholder="QmWBbKvLhVnkryKG6F5YdkcnoVahwD7Qi3CeJeZgM6Tq68">
+                </div>
+                <div>
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="film"> film
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="music"> music
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="txt"> txt
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-default">Share resources</button>
+            </form>
+        </div>
+        <hr />
+        <div align="left">
+            <p>If you got files on local,</p>
+            <p>You can upload the files <code><a href="{{ url_for('video_upload') }}">here</a></code> or on your computer by <code><a href="https://ipfs.io/docs/commands/#ipfs-add">ipfs add</a></code>.</p>
+        </div>
+        <hr />
+
+    </div>
+
+    <table class="table table-hover table-bordered">
+        <tr>
+          <th>ID</th>
+          <th>Filename</th>
+          <th>Filehash</th>
+          <th>type</th>
+        </tr>
+        {% for file in files.items %}
+        <tr>
+            <th>{{ file.id }}</th>
+            <th>{{ file.name }}</th>
+            <th><a href="{{ url_for('video_player', video_hash = file.hash) }}">{{ file.hash }}</a></th>
+            <th>{{ file.type }}</th>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% if files.has_prev %}<a href="{{ url_for('index', page = files.prev_num) }}"><< 上一页</a>{% else %}<< 上一页{% endif %} |
+    {% if files.has_next %}<a href="{{ url_for('index', page = files.next_num) }}">下一页 >></a>{% else %}下一页 >>{% endif %}
+</div>
+
+</body>
+</html>

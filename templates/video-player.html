@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Prunes Player</title>
+   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="icon" href="../static/images/favicon_32.png" sizes="32x32" />
+    <link rel="icon" href="../static/images/favicon_32.png" sizes="144x144" />
+   <!-- 新 Bootstrap 核心 CSS 文件 -->
+   <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+   <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+   <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+   <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+   <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+   <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+   <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+   <!-- 导入 video.js框架 -->
+   <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+   <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+   <!-- 导入微信分享javaScript文件 -->
+</head>
+<body>
+  <div class="container">
+    <!--  模态框 -->
+    <div class="modal fade" id="my_modal" tabindex="-1" role="dialog" aria-labeledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
+            <h3>此电影需要购买</h3>
+          </div>
+          <div class="modal-body">
+              <form role="form" method="post">
+                <div class="form-group">
+                  <label for="movie_price"><p class="text-primary">所需金额: 5￥</p></label>
+                  <input type="text" name="movie_pay" class="form-control" id="movie_price" placeholder="请输入金额..."></input>
+                </div>
+                <button type="submit" class="btn btn-success">发起支付</button>
+              </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-dismiss="modal">暂不购买</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 视频播放 -->
+    <video id="my_video" controls preload="auto" width="100%" height="500px"
+      class="video-js vjs-default-skin vjs-big-play-centered">
+      <source src="http://www.ipfs.guide/ipfs/{{ video_hash }}" type="video/mp4">
+    </video>
+    <p class="text-primary">当前播放时长/秒：<span id="current_time"></span></p>
+    <p class="text-primary">总时长/秒： <span id="video_duration"></span></p>
+    <hr />
+
+    <p class="text-primary my_font">用户评论：</p>
+
+    <form role="form" method="post">
+      <div class="form-group">
+        <textarea class="form-control" rows="3" name="user_comment" maxlength="300" placeholder="看点 | 槽点，不吐不快！别憋着，马上说出来吧！"></textarea>
+      </div>
+      <button type="submit" class="btn btn-success">发表评论</button>
+    </form>
+    <p class="text-primary my_font" id="all_comment">全部评论</p>
+  </div>
+
+</body>
+</html>
