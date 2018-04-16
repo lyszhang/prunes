@@ -1,12 +1,15 @@
 alembic==0.9.5
 altgraph==0.10.2
+amqp==2.2.2
 asn1crypto==0.22.0
 Babel==2.5.0
 bcrypt==3.1.3
 bdist-mpkg==0.5.0
+billiard==3.5.0.3
 bonjour-py==0.3
 boto3==1.4.4
 botocore==1.5.95
+celery==4.1.0
 cffi==1.10.0
 click==6.7
 cryptography==2.0.3
@@ -28,9 +31,11 @@ hdwallet==0.3
 http==0.2
 idna==2.6
 ipaddress==1.0.18
+ipfsapi==0.4.2.post1
 itsdangerous==0.24
 Jinja2==2.10
 jmespath==0.9.3
+kombu==4.1.0
 macholib==1.5.1
 Mako==1.0.7
 MarkupSafe==1.0
@@ -95,6 +100,7 @@ six==1.4.1
 SQLAlchemy==1.1.13
 urllib3==1.22
 uWSGI==2.0.14
+vine==1.1.4
 visitor==0.1.3
 Werkzeug==0.14.1
 xattr==0.6.4

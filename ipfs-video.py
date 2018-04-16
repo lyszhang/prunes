@@ -14,6 +14,7 @@ app = Flask(__name__)
 api = ipfsapi.connect('127.0.0.1', 5001)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['IPFS_LIST'] = "ipfs.list"
 app.config['ALLOWED_EXTENSIONS'] = set(['txt', 'pdf', 'avi', 'mp4', 'flv', 'mp3', 'wav', 'm4a', 'flac', 'ogg'])
 app.config['VIDEO_TYPE'] = set(['avi', 'mp4', 'flv'])
 app.config['MUSIC_TYPE'] = set(['mp3', 'wav', 'm4a', 'flac', 'ogg'])
@@ -23,26 +24,32 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
+def publish_ipfs(file_category, filename, filehash):
+    with open(app.config['IPFS_LIST'], 'a+') as f:
+        f.write(filename.encode('utf-8') + '\t' + filehash.encode('utf-8') + '\t' + file_category.encode('utf-8') + '\n')
+
 @app.before_first_request
 def create_db():
   # Recreate database each time for demo
   #db.drop_all()
   db.create_all()
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 @app.route('/<int:page>', methods=['GET', 'POST'])
 def index(page = 1):
     if request.method == 'POST':
         try:
             filename = request.form.get('exampleInputName', '')
             filehash = request.form.get('exampleInputHash', '')
-            filetype = request.form.get('inlineRadioOptions', '')
+            file_category = request.form.get('inlineRadioOptions', '')
         except:
             flash("The parameters error")
-
-        newfile = IPFS_hash(filetype, filename, filehash)
+        '''
+        newfile = IPFS_hash(file_category, filename, filehash)
         db.session.add(newfile)
         db.session.commit()
+        '''
+        publish_ipfs(file_category, filename, filehash)
 
     files = IPFS_hash.query.paginate(page=page, per_page=10)
 
@@ -82,6 +89,9 @@ def video_upload():
             newfile = IPFS_hash(file_category, file_name, file_hash['Hash'])
             db.session.add(newfile)
             db.session.commit()
+
+            publish_ipfs(file_category, file_name, file_hash)
+
             return render_template('result.html', file_hash=file_hash)
 
         else:
