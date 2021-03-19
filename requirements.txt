@@ -34,7 +34,7 @@ idna==2.6
 ipaddress==1.0.18
 ipfsapi==0.4.2.post1
 itsdangerous==0.24
-Jinja2==2.10
+Jinja2==2.11.3
 jmespath==0.9.3
 kombu==4.1.0
 macholib==1.5.1
